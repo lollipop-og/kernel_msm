@@ -161,7 +161,7 @@ int ts_charger_plug = 0;
 int ts_charger_type = 0;
 static void safety_reset(struct lge_touch_data *ts);
 static int touch_ic_init(struct lge_touch_data *ts);
-#ifdef G_ONLY
+#ifdef CUST_G_TOUCH_FREQ_HOPPING
 int cur_hopping_idx = 3;
 extern int cns_en;
 #endif
@@ -184,7 +184,7 @@ static enum hrtimer_restart touch_trigger_timer_handler(struct hrtimer *timer)
 void trigger_baseline_state_machine(int plug_in, int type)
 {
 	u8 buf=0;
-#ifdef G_ONLY
+#ifdef CUST_G_TOUCH_FREQ_HOPPING
 	extern u8 hopping;
 #endif
 
@@ -198,7 +198,7 @@ void trigger_baseline_state_machine(int plug_in, int type)
 					touch_i2c_read(touch_test_dev->client, 0x50, 1, &buf);
 					buf = buf & 0xDF;
 					touch_i2c_write_byte(touch_test_dev->client, 0x50, buf);
-#ifdef G_ONLY
+#ifdef CUST_G_TOUCH_FREQ_HOPPING
 					cns_en = 0;
 					if(cur_hopping_idx != 3) cur_hopping_idx = 3;
 					safety_reset(touch_test_dev);
@@ -210,7 +210,7 @@ void trigger_baseline_state_machine(int plug_in, int type)
 					touch_i2c_read(touch_test_dev->client, 0x50, 1, &buf);
 					buf = buf | 0x20;
 					touch_i2c_write_byte(touch_test_dev->client, 0x50, buf);
-#ifdef G_ONLY
+#ifdef CUST_G_TOUCH_FREQ_HOPPING
 					touch_i2c_write_byte(touch_test_dev->client, 0xFF, 0x01);
 					touch_i2c_read(touch_test_dev->client, 0x0D, 1, &buf);
 
@@ -252,7 +252,7 @@ void trigger_baseline_state_machine(int plug_in, int type)
 int ghost_detect_solution(struct lge_touch_data *ts)
 {
 	extern u8 pressure_zero;
-#ifdef G_ONLY
+#ifdef CUST_G_TOUCH_FREQ_HOPPING
 	extern u8 hopping;
 #endif
 	int first_int_detection = 0;
@@ -294,7 +294,7 @@ int ghost_detect_solution(struct lge_touch_data *ts)
 		TOUCH_INFO_MSG("pressure\n");
 		ghost_detection = true;
 	}
-#ifdef G_ONLY
+#ifdef CUST_G_TOUCH_FREQ_HOPPING
 	if(hopping == 1) {
 		TOUCH_INFO_MSG("hopping\n");
 		ghost_detection = true;
