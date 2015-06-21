@@ -50,13 +50,6 @@ typedef enum {
 
 hw_rev_type lge_get_board_revno(void);
 
-#ifdef CONFIG_LCD_KCAL
-struct kcal_data {
-	int red;
-	int green;
-	int blue;
-};
-
 #ifdef CONFIG_LGE_PM
 /*Classified the ADC value for cable detection */
 typedef enum {
@@ -114,7 +107,6 @@ struct kcal_platform_data {
 	int (*get_values) (int *r, int *g, int *b);
 	int (*refresh_display) (void);
 };
-#endif
 
 #ifdef CONFIG_LGE_PM
 /* LGE_S kwangjae1.lee@lge.com 2012-06-11 Add bms debugger */
