@@ -62,8 +62,6 @@
 #define KGSL_EVENT_TIMESTAMP_RETIRED 0
 #define KGSL_EVENT_CANCELLED 1
 
-#define KGSL_FLAG_WAKE_ON_TOUCH BIT(0)
-
 /*
  * "list" of event types for ftrace symbolic magic
  */
@@ -93,7 +91,7 @@ struct kgsl_functable {
 	bool (*isidle) (struct kgsl_device *device);
 	int (*suspend_context) (struct kgsl_device *device);
 	int (*init) (struct kgsl_device *device);
-	int (*start) (struct kgsl_device *device, int priority);
+	int (*start) (struct kgsl_device *device);
 	int (*stop) (struct kgsl_device *device);
 	int (*getproperty) (struct kgsl_device *device,
 		enum kgsl_property_type type, void *value,
@@ -792,25 +790,4 @@ static inline void kgsl_trace_gpu_sched_switch(const char *name,
 
 #endif
 
-/**
- * kgsl_sysfs_store() - parse a string from a sysfs store function
- * @buf: Incoming string to parse
- * @count: Size of the incoming string
- * @ptr: Pointer to an unsigned int to store the value
- */
-static inline ssize_t kgsl_sysfs_store(const char *buf, size_t count,
-		unsigned int *ptr)
-{
-	unsigned int val;
-	int rc;
-
-	rc = kstrtou32(buf, 0, &val);
-	if (rc)
-		return rc;
-
-	if (ptr)
-		*ptr = val;
-
-	return count;
-}
 #endif  /* __KGSL_DEVICE_H */

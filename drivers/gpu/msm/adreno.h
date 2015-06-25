@@ -191,9 +191,6 @@ struct adreno_device {
 	struct adreno_dispatcher dispatcher;
 	struct kgsl_memdesc pwron_fixup;
 	unsigned int pwron_fixup_dwords;
-
-	struct work_struct start_work;
-	struct work_struct input_work;
 };
 
 /**
@@ -317,6 +314,8 @@ enum adreno_regs {
 	ADRENO_REG_TP0_CHICKEN,
 	ADRENO_REG_RBBM_RBBM_CTL,
 	ADRENO_REG_UCHE_INVALIDATE0,
+	ADRENO_REG_VBIF_XIN_HALT_CTRL0,
+	ADRENO_REG_VBIF_XIN_HALT_CTRL1,
 	ADRENO_REG_REGISTER_MAX,
 };
 
