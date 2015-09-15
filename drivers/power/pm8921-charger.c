@@ -2028,7 +2028,7 @@ static int max17043_get_capacity(struct pm8921_chg_chip *chip)
 	percent_soc = __max17043_get_capacity();
 
 	if (percent_soc <= 10)
-		pr_warn("low battery charge = %d%%\n", percent_soc);
+		pr_debug("low battery charge = %d%%\n", percent_soc);
 
 #ifdef CONFIG_LGE_PM
 	if (is_real_battery_or_factory_cable(chip)) {
